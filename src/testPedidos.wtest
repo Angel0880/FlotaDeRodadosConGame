@@ -1,0 +1,44 @@
+import Rodados.*
+import Pedidos.*
+
+describe "Pedidos para determinados autos" {
+	
+	const cachito = new Corsa(color = "rojo")
+	const auto1 = new Corsa(color = "azul")
+	const auto2 = new Kwid(tieneTanqueAdicional = true)
+	const auto3 = new AutoEspecial(capacidad = 5, velocidadMaxima = 160, peso = 1200, color = "beige" )
+	const pedido1 = new Pedido(distancia = 480, tiempoMaximo = 6, cantidadPasajeros = 3)
+	const pedido2 = new Pedido(distancia = 330, tiempoMaximo = 8, cantidadPasajeros = 5) 
+	
+	fixture {
+		
+		trafic.interior(comodo)
+		trafic.motor(pulenta)
+		pedido1.agregarColorIncompatible("blanco")
+		pedido1.agregarColorIncompatible("beige")
+		pedido2.agregarColorIncompatible("azul")
+		pedido2.agregarColorIncompatible("rojo")
+		
+	}
+	
+	test "Pueden realizar el pedido o no" {
+
+		assert.that(pedido1.puedeSatisfacerPedidoDe(cachito))
+		assert.that(pedido1.puedeSatisfacerPedidoDe(auto1))
+		assert.that(pedido1.puedeSatisfacerPedidoDe(auto2))
+		assert.that(pedido2.puedeSatisfacerPedidoDe(auto3))
+		assert.that(pedido1.puedeSatisfacerPedidoDe(trafic))
+		assert.that(pedido2.puedeSatisfacerPedidoDe(trafic))
+			
+	}
+	
+	test "No pueden realizar el pedido" {
+	
+		assert.notThat(pedido2.puedeSatisfacerPedidoDe(cachito))
+		assert.notThat(pedido2.puedeSatisfacerPedidoDe(auto1))
+		assert.notThat(pedido2.puedeSatisfacerPedidoDe(auto2))
+		assert.notThat(pedido1.puedeSatisfacerPedidoDe(auto3))
+	
+	}
+
+}

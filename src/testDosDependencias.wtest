@@ -1,0 +1,50 @@
+import Rodados.*
+import Dependencias.*
+
+describe "Dos dependencias con sus autos" {
+	
+	const dependencia1 = new Dependencia(nombre = "deportes", cantidadEmpleados = 45)
+	const dependencia2 = new Dependencia(nombre = "cultura", cantidadEmpleados = 31)
+	const cachito = new Corsa(color = "rojo")
+	const auto1 = new Corsa(color = "azul")
+	const auto2 = new Corsa(color = "verde")
+	const auto3 = new Kwid(tieneTanqueAdicional = true)
+	const auto4 = new AutoEspecial(capacidad = 5, velocidadMaxima = 160, peso = 1200, color = "beige" )
+	const auto5 = new Kwid(tieneTanqueAdicional = true)
+	const auto6 = new Kwid(tieneTanqueAdicional = false) 
+	
+	fixture {
+		
+		trafic.interior(popular)
+		trafic.motor(bataton)
+		dependencia1.agregarAFlota(cachito)
+		dependencia1.agregarAFlota(auto1)
+		dependencia1.agregarAFlota(auto2)
+		dependencia1.agregarAFlota(auto3)
+		dependencia1.agregarAFlota(auto4)
+		dependencia2.agregarAFlota(cachito)
+		dependencia2.agregarAFlota(auto5)
+		dependencia2.agregarAFlota(auto5)
+		dependencia2.agregarAFlota(auto6)
+		dependencia2.agregarAFlota(trafic)
+		
+	}
+	
+	test "Hora de la prueba" {
+		
+		assert.equals(6450,dependencia1.pesoTotalFlota())
+		assert.equals(10700,dependencia2.pesoTotalFlota())
+		assert.that(dependencia1.estaBienEquipada())
+		assert.notThat(dependencia2.estaBienEquipada())
+		assert.equals(4,dependencia1.capacidadTotalEnColor("azul"))
+		assert.equals(0,dependencia2.capacidadTotalEnColor("azul"))
+		assert.equals("beige",dependencia1.colorDelRodadoMasRapido())
+		assert.equals("rojo",dependencia2.colorDelRodadoMasRapido())
+		assert.equals(25,dependencia1.capacidadFaltante())
+		assert.equals(5,dependencia2.capacidadFaltante())
+		assert.that(dependencia1.esGrande())
+		assert.notThat(dependencia2.esGrande())
+			
+	}
+	
+}

@@ -1,0 +1,25 @@
+import wollok.game.*
+import Rodados.*
+import Colores.*
+
+program corsasEnElGame {
+	game.width(15) 
+	game.height(15)
+	game.title("Un paseo con cachito") 
+	var cachito = new Corsa(color = "rojo")
+	
+	game.addVisual(cachito)
+	
+	keyboard.right().onPressDo{ cachito.moverALaDerecha() }
+	keyboard.left().onPressDo{ cachito.moverALaIzquierda() }
+	keyboard.up().onPressDo{ cachito.moverAArriba() }
+	keyboard.down().onPressDo{ cachito.moverAAbajo() }
+	
+	keyboard.r().onPressDo{ cachito.image(rojo.image()) }
+	keyboard.v().onPressDo{ cachito.image(verde.image()) }
+	keyboard.a().onPressDo{ cachito.image(azul.image()) }
+	
+	
+	game.start()
+	
+}
